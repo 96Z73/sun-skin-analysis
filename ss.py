@@ -31,7 +31,6 @@ class SkinStuff:
         
         self.face_detection = mp_face_detection.FaceDetection()
         self.face_mesh = mp_face_mesh.FaceMesh()
-        self.createScreen()
 
     def detect_face(self, frame):
         # Convert the image to RGB format
@@ -589,5 +588,6 @@ class SkinStuff:
 if __name__ == '__main__':
 
     obj = SkinStuff()
+    obj.createScreen()
     # Run the Tkinter event loop
     obj.frame.mainloop()
