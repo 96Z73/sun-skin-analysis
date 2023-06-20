@@ -2,17 +2,17 @@ import tkinter as tk
 import cv2
 from PIL import Image, ImageTk, ImageSequence
 from tkinter import filedialog
-from functools import partial
+# from functools import partial
 import time
 import datetime
 import numpy as np
 import mediapipe as mp
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
+# from mediapipe.tasks import python
+# from mediapipe.tasks.python import vision
 from sklearn.cluster import MiniBatchKMeans as KMeans
 from collections import Counter
 import pprint
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import imutils
 
 mp_face_detection = mp.solutions.face_detection
@@ -271,11 +271,11 @@ class SkinStuff:
         # Fit the image
         estimator.fit(img)
         # Get color information
-        print(f"INSIDE extractDominantColor TIME for FIT WAS: {time.time() - timeA}")
-        timeB = time.time()
+        # print(f"INSIDE extractDominantColor TIME for FIT WAS: {time.time() - timeA}")
+        # timeB = time.time()
         colorInformation = self.getColorInformation(
             estimator.labels_, estimator.cluster_centers_, hasThresholding)
-        print(f"INSIDE extractDominantColor TIME for getColorInformation WAS: {time.time() - timeB}")
+        # print(f"INSIDE extractDominantColor TIME for getColorInformation WAS: {time.time() - timeB}")
         return colorInformation
 
 
