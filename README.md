@@ -50,4 +50,4 @@ The Sun Skin Analysis program utilizes the following technologies:
 
 
 ### Face analysis Page:
-![image](./media/sampleOutput.png)
+![image](./media/s3.png)
