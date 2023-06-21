@@ -41,7 +41,6 @@ class SkinStuff:
         if results.detections:
             for detection in results.detections:
                 bbox = detection.location_data.relative_bounding_box
-                print("BBOX CONTENTS ARE ", bbox)
                 ih, iw, _ = frame.shape
                 xmin = int(bbox.xmin * iw)
                 ymin = int(bbox.ymin * ih)
@@ -72,7 +71,7 @@ class SkinStuff:
                                     # Perform wrinkle detection on the eye ROI
                                     edges = cv2.Canny(eye_roi_gray, 100, 150)
                                     number_of_edges = np.count_nonzero(edges)
-                                    if number_of_edges > 70:
+                                    if number_of_edges > 90:
                                         cv2.putText(frame, "Wrinkle Found", (xmin, ymin - 10),
                                                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                                     else:
@@ -81,7 +80,7 @@ class SkinStuff:
 
                                     # Check for dark circles
                                     mean_intensity = cv2.mean(eye_roi_gray)[0]
-                                    if mean_intensity < 80:  # threshold based on lighting conditions
+                                    if mean_intensity < 160:  # threshold based on lighting conditions
                                         cv2.putText(frame, "Dark Circle", (xmin, ymin - 30),
                                                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                                     else:
@@ -147,21 +146,28 @@ class SkinStuff:
         file_path = filedialog.askopenfilename()
         if file_path:
             frame = cv2.imread(file_path)
-            frame = imutils.resize(frame,500,500)
+            frame = imutils.resize(frame,400,400)
             self.display_frame(frame)
 
     def capturedimage(self, image_path):
         if image_path:
             frame = cv2.imread(image_path)
+            frame = imutils.resize(frame,400,400)
             self.display_frame(frame)
 
     def display_frame(self, frame):
-
-        self.Video_label2 = tk.Label(self.frame)
+        
+       
+        self.canvas2 = tk.Canvas(self.frame, width=450, height=300)
+        self.canvas2.pack(pady=10)
+        self.canvas2.place(x=170, y=100) 
+        self.Video_label2 = tk.Label(self.canvas2)
         self.Video_label2.pack()
-        self.Video_label2.place(x=60, y=10) 
+        
 
         def endd():
+            self.canvas2.pack_forget()
+            self.canvas2.destroy()
             self.Video_label2.pack_forget()
             self.Video_label2.destroy()
             self.gb.pack_forget()
@@ -178,7 +184,8 @@ class SkinStuff:
         self.Video_label2.configure(image=imgtk)
 
         self.gb = tk.Button(self.frame, text="go back", command=endd)
-        self.gb.pack(pady=10)
+        self.gb.pack()
+        self.gb.place(x=365, y=450)
 
         
 
@@ -475,10 +482,13 @@ class SkinStuff:
 
         else:
             self.frame3.pack(fill='both', expand=True)
+            self.frame2.pack_forget()
             self.canvas.pack_forget()
-            self.capture_button2.pack(pady=10)
-            self.upload_button2.pack(pady=10)
             self.button3.pack()
+            self.button3.place(x=365, y=450)
+
+
+            
         self.toggle_frame_flag = not self.toggle_frame_flag
 
     def toggle_frame2(self):
@@ -572,15 +582,19 @@ class SkinStuff:
         self.frame3.configure(bg="#88cffa")
 
 
-        self.button3 = tk.Button(self.frame3, text="go back", command=self.toggle_frame2)
-        self.button3.pack()
-        self.button3.place(x=350, y=400)
+
+        self.capture_button2 = tk.Button(self.frame3, text="Capture Image", command=self.capturei)
+        self.capture_button2.pack(pady=10)
+        self.capture_button2.place(x=350, y=250)
 
         self.upload_button2 = tk.Button(self.frame3, text="Upload Image", command=self.uploadi)
         self.upload_button2.pack(pady=10)
+        self.upload_button2.place(x=352, y=300)
 
-        self.capture_button2 = tk.Button(self.frame3, text="Capture Image", command=self.capturei)
-        self.capture_button2.pack(pady=5)
+        self.button3 = tk.Button(self.frame3, text="go back", command=self.toggle_frame2)
+        
+
+        
 
 
 
